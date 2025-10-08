@@ -22,6 +22,8 @@ export class EmailService {
     },
   });
 
+  constructor() {}
+
   async sendEmail(options: SendEmailOptions): Promise<boolean> {
     const { to, subject, htmlBody, attachments = [] } = options;
 
@@ -35,7 +37,6 @@ export class EmailService {
 
       return true;
     } catch (error) {
-      console.error(error);
       return false;
     }
   }
