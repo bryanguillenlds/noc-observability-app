@@ -1,0 +1,80 @@
+# =============================================================================
+# DOCKER COMPOSE CONFIGURATION FOR NOC APP
+# =============================================================================
+# This file defines how to run multiple Docker containers together as a single
+# application stack. Docker Compose reads this file and creates/manages all
+# the services defined below. (In this case, only one service is defined: mongo-db)
+
+# Docker Compose file format version
+# This tells Docker Compose which version of the compose file format to use
+# Version 3.8 supports most modern Docker features and is widely compatible
+version: "3.8"
+
+# =============================================================================
+# SERVICES SECTION
+# =============================================================================
+# Services are the individual containers that make up your application
+# Each service can have its own image, configuration, and dependencies
+services:
+
+  # MongoDB Database Service
+  # This service runs a MongoDB database that your NOC app will connect to
+  # to store log data, user information, and other application data
+  mongo-db:
+
+    # Docker Image Specification
+    # This tells Docker which pre-built image to use for this container
+    # mongo:6.0.6 means "use the official MongoDB image, version 6.0.6"
+    # The official MongoDB image comes with MongoDB pre-installed and configured
+    image: mongo:6.0.6
+
+    # Container Restart Policy
+    # "always" means Docker will automatically restart this container if it:
+    # - Crashes due to an error
+    # - Stops unexpectedly
+    # - The Docker daemon restarts
+    # This ensures your database stays available even if something goes wrong
+    restart: always
+
+    # Environment Variables
+    # These are key-value pairs that get passed into the container
+    # MongoDB uses these to set up the initial admin user account
+    environment:
+
+      # MongoDB Root Username
+      # ${MONGO_USER} is a variable substitution - it reads the value from
+      # your .env file or system environment variables
+      # This creates the initial admin user for MongoDB authentication
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+
+      # MongoDB Root Password
+      # ${MONGO_PASS} reads the password from environment variables
+      # This password is required to access MongoDB as the admin user
+      # Using environment variables keeps sensitive data out of your code
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+
+    # Volume Mounts
+    # Volumes allow data to persist outside the container's lifecycle
+    # Without volumes, all your database data would be lost when the container stops
+    volumes:
+
+      # Data Persistence Mount
+      # ./mongo:/data/db means:
+      # - ./mongo (on your host machine) maps to /data/db (inside the container)
+      # - ./mongo is a relative path from where you run docker-compose
+      # - /data/db is where MongoDB stores its database files inside the container
+      # - This ensures your database data survives container restarts/recreates
+      - ./mongo:/data/db
+
+    # Port Mapping
+    # This exposes ports from inside the container to your host machine
+    ports:
+
+      # MongoDB Port Exposure
+      # 27017:27017 means:
+      # - First 27017: port on your host machine (your computer)
+      # - Second 27017: port inside the container
+      # - 27017 is MongoDB's default port
+      # - This allows your NOC app (running on your host) to connect to MongoDB
+      # - You can access MongoDB from localhost:27017 on your machine
+      - 27017:27017
