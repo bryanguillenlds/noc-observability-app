@@ -15,10 +15,10 @@ export class Server {
   public static start(): void {
     console.log(`Server is running`);
 
-    new SendEmailLogs(fileSystemLogRepository, emailService).execute([
-      "test@test.com",
-      "test2@test.com",
-    ]);
+    // new SendEmailLogs(fileSystemLogRepository, emailService).execute([
+    //   "test@test.com",
+    //   "test2@test.com",
+    // ]);
 
     CronService.createCronJob("*/5 * * * * *", () => {
       const url = "https://www.google.com";
