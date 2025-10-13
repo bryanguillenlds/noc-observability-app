@@ -5,14 +5,12 @@ The objective of this project is to create a Node.js-based monitoring system (NO
 # dev
 
 1. Clone .env.tamplate to your own .env
-2. Config your env variables:
-
-```
-MAILER_EMAIL=
-MAILER_SECRET_KEY=
-PROD=false
-PORT=3000
-```
-
+2. Config your env variables
 3. Execute ``npm install`
-4. Execute `npm run dev`
+4. Run DB with:
+
+```
+docker compose up -d
+```
+
+5. Execute `npm run dev`
