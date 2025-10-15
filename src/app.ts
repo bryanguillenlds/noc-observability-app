@@ -9,8 +9,6 @@ const main = async () => {
     dbName: envs.MONGO_DB_NAME,
   });
 
-  const prisma = new PrismaClient();
-
   Server.start();
 };
 
