@@ -8,13 +8,21 @@
   "scripts": {
     "dev": "tsnd --respawn --clear src/app.ts",
     "build": "rimraf ./dist && tsc",
-    "start": "npm run build && node dist/app.js"
+    "start": "npm run build && node dist/app.js",
+    "docker:test": "docker compose -f docker-compose.test.yaml --env-file .env.test up -d",
+    "test": "npm run docker:test && node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "npm run docker:test && node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "test:coverage": "npm run docker:test && node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.6.0",
     "@types/nodemailer": "^7.0.2",
+    "jest": "^30.2.0",
     "prisma": "^6.17.1",
     "rimraf": "^6.0.1",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.5",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.2"
   },

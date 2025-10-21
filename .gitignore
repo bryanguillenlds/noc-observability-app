@@ -3,6 +3,9 @@ node_modules
 logs/
 dist/
 .env
+.env.test
 /mongo/
 /postgres/
+/mongo-test/
+/postgres-test/
 /src/generated/prisma
