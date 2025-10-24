@@ -27,6 +27,14 @@ This creates the database tables in your local PostgreSQL instance based on the 
 
 6. Execute `npm run dev`
 
+## Testing
+
+Run tests with isolated test databases:
+
+```bash
+npm test
+```
+
 ## Additional Prisma Commands
 
 - **Generate Prisma Client** (if you pull schema changes from Git):
@@ -104,6 +112,14 @@ This separation means you can swap datasources or add new ones without changing 
 
 - Docker Compose for local database setup
 - ts-node-dev for development hot-reloading
+
+**Testing:**
+
+- Jest with TypeScript for unit and integration testing
+- 96%+ code coverage with isolated test databases
+- Clean architecture testing: each layer tested independently (domain entities, use cases, repositories)
+- Real database integration tests with proper cleanup between tests
+- Mocked external dependencies (email service) to ensure test reliability
 
 ### Implementation Notes
 
